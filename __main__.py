@@ -69,12 +69,15 @@ def linear_classify():
     # w1 = np.loadtxt('outputW1-new', dtype=float)
     # w2 = np.loadtxt('outputW2-new', dtype=float)
     # w3 = np.loadtxt('outputW3-new', dtype=float)
-
-    L = (np_Encrypt - wEpoch[0] * np_Key1 - wEpoch[1] * np_Key2) / wEpoch[2]
+    L = np.zeros(rows * cols)
+    for i in range(rows * cols):
+        L[i] = (np_Encrypt.flatten()[i] - wEpoch[0] * np_Key1.flatten()[i] - wEpoch[1] * np_Key2.flatten()[i]) / wEpoch[2]
 
     # np.savetxt('DecryptPic', L.astype(int))
-    img_l = Image.fromarray(L.astype(int), mode='L')
-    img_l.save("out_E.jpg")
+    L = L.reshape((rows, cols))
+    img_l = Image.fromarray(L.astype(int))
+    img_l.show()
+    img_l.save("out_E.png")
 
 
 def violence_method():
