@@ -77,3 +77,58 @@
             wEpoch[2] = wEpoch[2] + (apha * e_k * x_k[2])
         Epoch += 1
   ```
+  
+  ### 詳細說明 :
+1. 首先 先初始化 W 陣列，並初始化 pre_wEpoch 為 0 
+2. while 中如果 Epoch 等於 1 就進入，其餘條件 如果超過 MaxLimit 則跳出，若在 MaxLimit 限制之內，則判斷是否收斂
+3. 一開始先記錄當前的加權向量
+4. 進入for迴圈，執行圖片大小(300 * 400)的次數
+5. 獲得 a_k = [w(0) * Key1(k), w(1) * Key2(k), w(2) * I(k)]
+6. 獲得 x_k = [Key1(k), Key2(k), I(k)]
+7. 獲得 e_k = E(k) - (a_k[0] + a_k[1] + a_k[2])
+8. 修正 w 的值 wEpoch = wEpoch + (apha * e_k * x_k)
+9. 最後跳出 for 迴圈 Epoch += 1
+
+#### #備註 : 所有陣列皆已使用 .flatten() 函數打平處理
+
+## 五、獲得之3W
+  - W1 = 0.24914331
+  - W2 = 0.6613819
+  - W3 = 0.08923953
+  
+[![N|Solid](https://i.imgur.com/wbCnqkb.jpg)](https://github.com/kevinlin0638)  
+  執行結束示意圖  ↑
+
+## 六、解碼圖片
+一樣，先附上完整程式碼
+```python
+    # 讀取需要解密之圖片
+    Encrypt = Image.open("Imgs/Eprime.png")
+    Encrypt = Encrypt.convert('L')
+    np_Encrypt = np.asarray(Encrypt).copy()
+
+    # 運算
+    L = np.zeros(rows * cols)
+    for i in range(rows * cols):
+        L[i] = (np_Encrypt.flatten()[i] - wEpoch[0] * np_Key1.flatten()[i] - wEpoch[1] * np_Key2.flatten()[i]) / wEpoch[2]
+
+    # 存圖
+    L = L.reshape((rows, cols))
+    img_l = Image.fromarray(np.uint8(L))
+    img_l.show()
+```  
+
+[![N|Solid](https://i.imgur.com/RyAHWDb.jpg)](https://github.com/kevinlin0638)  
+解碼成功示意圖示意圖，帥氣導師 ↑  
+
+## 七、Extra Work
+拿到3個 W 後，也可以來做個加解密的 funtion 了，於是做了加密與解密的函式
+
+## 八、心得
+
+> 學習到了如何使用 python 來進行 Linear Classify 的解題
+> 在撰寫的過程中遇到不少小問題，例如:型態的轉換、灰階圖片轉換等
+> 不知道是不是不太了解 numpy 的陣列運算，好像不可以直接以陣列運算，要以 index 的方式一個一個算
+> 最後找到老師大頭滿有成久感的，因為 De 一個灰階的儲存小bug de了兩天.....
+
+

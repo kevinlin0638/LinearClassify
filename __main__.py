@@ -20,6 +20,8 @@ def linear_classify():
         np_I = np.asarray(I).copy()
         np_Key1 = np.asarray(Key1).copy()
         np_Key2 = np.asarray(Key2).copy()
+
+        copy = 'U2FsdGVkX1+S0wU/4R6RatUoEm8KT+cRx05NtMHy2bq49ne9ep9nY985c6WcJAdo'
     except FileNotFoundError:
         print("找不到此檔案請重新輸入!")
         exit(0)
@@ -69,9 +71,62 @@ def linear_classify():
         L[i] = (np_Encrypt.flatten()[i] - wEpoch[0] * np_Key1.flatten()[i] - wEpoch[1] * np_Key2.flatten()[i]) / wEpoch[2]
 
     L = L.reshape((rows, cols))
-    img_l = Image.fromarray(L.astype(int))
+    img_l = Image.fromarray(np.uint8(L))
     img_l.show()
     img_l.save("out_E.png")
+
+
+def derypt_pic():
+    Encrypt = Image.open("Imgs/Encrypt.png")
+    Encrypt = Encrypt.convert('L')
+    np_Encrypt = np.asarray(Encrypt).copy()
+    Key1 = Image.open("Imgs/key1.png")
+    Key1 = Key1.convert('L')
+    Key2 = Image.open("Imgs/key2.png")
+    Key2 = Key2.convert('L')
+    np_Key1 = np.asarray(Key1).copy()
+    np_Key2 = np.asarray(Key2).copy()
+
+    rows = np_Encrypt.shape[0]
+    cols = np_Encrypt.shape[1]
+
+    wEpoch = [0.24914331,  0.6613819, 0.08923953]
+
+    L = np.zeros(Encrypt.shape)
+    for i in range(rows * cols):
+        L[i] = (np_Encrypt.flatten()[i] - wEpoch[0] * np_Key1.flatten()[i] - wEpoch[1] * np_Key2.flatten()[i]) / wEpoch[
+            2]
+
+    L = L.reshape((rows, cols))
+    img_l = Image.fromarray(np.uint8(L))
+    img_l.show()
+    img_l.save("decrypt.png")
+
+
+def encrypt_pic():
+    Encrypt = Image.open("Imgs/Encrypt.png")
+    Encrypt = Encrypt.convert('L')
+    np_Encrypt = np.asarray(Encrypt).copy()
+    Key1 = Image.open("Imgs/key1.png")
+    Key1 = Key1.convert('L')
+    Key2 = Image.open("Imgs/key2.png")
+    Key2 = Key2.convert('L')
+    np_Key1 = np.asarray(Key1).copy()
+    np_Key2 = np.asarray(Key2).copy()
+
+    rows = np_Encrypt.shape[0]
+    cols = np_Encrypt.shape[1]
+
+    wEpoch = [0.24914331, 0.6613819, 0.08923953]
+
+    L = np.zeros(Encrypt.shape)
+    for i in range(rows * cols):
+        L[i] = np_Encrypt.flatten()[i] * wEpoch[2] + wEpoch[0] * np_Key1.flatten()[i] + wEpoch[1] * np_Key2.flatten()[i]
+
+    L = L.reshape((rows, cols))
+    img_l = Image.fromarray(np.uint8(L))
+    img_l.show()
+    img_l.save("encrypt.png")
 
 
 if __name__ == "__main__":
