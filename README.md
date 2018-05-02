@@ -3,17 +3,17 @@
 
 ## 一、Prepare Before Excute Program
 在開始執行前,請先準備好所需的圖片.
-  - 1.尚未加密的圖片
+  - 1.尚未加密的圖片  
   [![N|Solid](https://i.imgur.com/gHx1ho1.png)](https://github.com/kevinlin0638)
-  - 2.圖片-Key1
+  - 2.圖片-Key1  
   [![N|Solid](https://i.imgur.com/ccohdiD.png)](https://github.com/kevinlin0638)
-  - 3.圖片-Key2
+  - 3.圖片-Key2  
   [![N|Solid](https://i.imgur.com/ZUFa20k.png)](https://github.com/kevinlin0638)
-  - 4.圖片-加密後的圖片
+  - 4.圖片-加密後的圖片  
   [![N|Solid](https://i.imgur.com/BB3Oei7.png)](https://github.com/kevinlin0638)
-  - 5.圖片-需要被解密的圖片
+  - 5.圖片-需要被解密的圖片  
   [![N|Solid](https://i.imgur.com/6k7JihR.png)](https://github.com/kevinlin0638)
-
+  
 ## 二、Load Picture into your program and Import Package
 
   - Import PIL 套件
