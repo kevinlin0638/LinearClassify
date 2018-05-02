@@ -2,9 +2,10 @@ from PIL import Image
 import numpy as np
 
 
+# U2FsdGVkX1+S0wU/4R6RatUoEm8KT+cRx05NtMHy2bq49ne9ep9nY985c6WcJAdo Linear Classify
 def linear_classify():
-    global np_E
     try:
+        #  讀取照片
         E = Image.open("Imgs/E.png")
         E = E.convert('L')
         I = Image.open("Imgs/I.png")
@@ -14,6 +15,7 @@ def linear_classify():
         Key2 = Image.open("Imgs/key2.png")
         Key2 = Key2.convert('L')
 
+        #  將圖片轉成 numpy陣列
         np_E = np.asarray(E).copy()
         np_I = np.asarray(I).copy()
         np_Key1 = np.asarray(Key1).copy()
@@ -22,15 +24,19 @@ def linear_classify():
         print("找不到此檔案請重新輸入!")
         exit(0)
 
+    # 宣告常數
     Epoch = 1
     apha = 0.00001
     eptho = 0
 
+    # 圖片大小
     rows = np_E.shape[0]
     cols = np_E.shape[1]
 
+    # 最多學習輪轉數
     MaxLimit = 20
 
+    # 初始化 w 陣列(U2FsdGVkX1+S0wU/4R6RatUoEm8KT+cRx05NtMHy2bq49ne9ep9nY985c6WcJAdo)
     wEpoch = np.array([0.0, 0.0, 0.0])
 
     pre_wEpoch = 0
